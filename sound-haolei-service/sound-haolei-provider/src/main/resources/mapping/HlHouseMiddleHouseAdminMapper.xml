@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sound.haolei.provider.dao.HlHouseMiddleHouseAdminMapper" >
+  <resultMap id="BaseResultMap" type="com.sound.haolei.model.HlHouseMiddleHouseAdmin" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="house_id" property="houseId" jdbcType="INTEGER" />
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, house_id, admin_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hl_house_middle_house_admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hl_house_middle_house_admin${substationNameSpell}
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sound.haolei.model.HlHouseMiddleHouseAdmin" >
+    insert into hl_house_middle_house_admin${substationNameSpell} (id, house_id, admin_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{houseId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sound.haolei.model.HlHouseMiddleHouseAdmin" >
+    insert into hl_house_middle_house_admin${substationNameSpell}
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="houseId != null" >
+        house_id,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="houseId != null" >
+        #{houseId,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sound.haolei.model.HlHouseMiddleHouseAdmin" >
+    update hl_house_middle_house_admin${substationNameSpell}
+    <set >
+      <if test="houseId != null" >
+        house_id = #{houseId,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sound.haolei.model.HlHouseMiddleHouseAdmin" >
+    update hl_house_middle_house_admin${substationNameSpell}
+    set house_id = #{houseId,jdbcType=INTEGER},
+      admin_id = #{adminId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- *****************************************************自定义************************************************ -->
+  <sql id="where">
+  	<if test="houseId !=null ">
+  		and house_id=#{houseId}
+  	</if>
+  	<if test="userId !=null ">
+  		and admin_id=#{userId}
+  	</if>
+  </sql>
+  <!-- 根据条件查询 -->
+  <select id="selectByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from hl_house_middle_house_admin${substationNameSpell}
+    where 1=1
+    <include refid="where"></include>
+  </select>
+  <!-- *****************************************************自定义************************************************ -->
+  
+  <!-- 批量删除 -->
+  <delete id="batchDeleteUser" parameterType="java.lang.String">
+  	delete from hl_house_middle_house_admin${substationNameSpell}
+  	where house_id=#{houseId} and admin_id in
+  	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">     
+       ${item}     
+    </foreach> 
+  </delete>
+  
+  <!-- 批量删除 -->
+  <delete id="batchDeleteHouse">
+  	delete from hl_house_middle_house_admin${substationNameSpell}
+  	where admin_id=#{adminId}
+  </delete>
+  
+  <!-- 批量添加 -->
+  <insert id="batchAddHouseAdmin">
+  	insert into hl_house_middle_house_admin${substationNameSpell} (house_id, admin_id) values
+	<foreach collection="list" item="item" index="index" separator=",">
+		(#{item.houseId,jdbcType=INTEGER},#{item.adminId,jdbcType=INTEGER})
+	</foreach>
+  </insert>
+  <!-- 根据分站批量删除 add by wangyonghui 2017-06-28 20:48:30-->
+  <delete id="batchDeleteHouseWithSubstation">
+  	delete from hl_house_middle_house_admin${substationSpell}
+  	where admin_id=#{adminId}
+  </delete>
+  
+  <!-- 根据分站批量添加 add by wangyonghui 2017-06-28 20:48:30-->
+  <insert id="batchAddHouseAdminWithSubstation" parameterType="java.util.List">
+  	insert into hl_house_middle_house_admin${substationSpell} (house_id, admin_id) values
+	<foreach collection="list" item="item" index="index" separator=",">
+		(#{item.houseId,jdbcType=INTEGER},#{item.adminId,jdbcType=INTEGER})
+	</foreach>
+  </insert>
+
+	<!-- 查询管理员管辖的回收亭 -->
+  <select id="selectByAdminId" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from hl_house_middle_house_admin${substationNameSpell}
+    where 1=1 
+    and admin_id=#{adminId}
+    ORDER BY id DESC
+  </select>
+  
+  <!-- 查询管理员管辖的回收亭,加了表后缀 -->
+  <select id="selectByAdminIdAndTableEnd" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from hl_house_middle_house_admin${substationNameSpell}
+    where 1=1 
+    and admin_id=#{adminId}
+    ORDER BY id DESC
+  </select>
+  
+  <!-- 查询管理员管辖的回收亭 -->
+  <select id="selectByAdminIdWithSubstation" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from hl_house_middle_house_admin${substationSpell}
+    where 1=1 
+    and admin_id=#{adminId}
+    ORDER BY id DESC
+  </select>
+  
+  	<!--@Description 分站查询的回收亭  @author sushile-->
+  <select id="selectHouseBySub" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from hl_house_middle_house_admin${substationNameSpell}
+    where 1=1 
+    and admin_id=${adminId}
+    ORDER BY id DESC
+  </select>
+  
+</mapper>

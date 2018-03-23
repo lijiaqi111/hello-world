@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sound.haolei.provider.dao.HlOldDetectionMapper" >
+  <resultMap id="BaseResultMap" type="com.sound.haolei.model.HlOldDetection" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="inspection_no" property="inspectionNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="inspection_date" property="inspectionDate" jdbcType="TIMESTAMP" />
+    <result column="settle_price" property="settlePrice" jdbcType="DECIMAL" />
+    <result column="product_attrs" property="productAttrs" jdbcType="VARCHAR" />
+    <result column="partner_id" property="partnerId" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, inspection_no, order_no, inspection_date, settle_price, product_attrs, partner_id, 
+    sign
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hl_old_detection
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hl_old_detection
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sound.haolei.model.HlOldDetection" >
+    insert into hl_old_detection (id, inspection_no, order_no, 
+      inspection_date, settle_price, product_attrs, 
+      partner_id, sign)
+    values (#{id,jdbcType=INTEGER}, #{inspectionNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{inspectionDate,jdbcType=TIMESTAMP}, #{settlePrice,jdbcType=DECIMAL}, #{productAttrs,jdbcType=VARCHAR}, 
+      #{partnerId,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sound.haolei.model.HlOldDetection" >
+    insert into hl_old_detection
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="inspectionNo != null" >
+        inspection_no,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="inspectionDate != null" >
+        inspection_date,
+      </if>
+      <if test="settlePrice != null" >
+        settle_price,
+      </if>
+      <if test="productAttrs != null" >
+        product_attrs,
+      </if>
+      <if test="partnerId != null" >
+        partner_id,
+      </if>
+      <if test="sign != null" >
+        sign,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="inspectionNo != null" >
+        #{inspectionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionDate != null" >
+        #{inspectionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="settlePrice != null" >
+        #{settlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productAttrs != null" >
+        #{productAttrs,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerId != null" >
+        #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        #{sign,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.sound.haolei.model.HlOldDetection" >
+    update hl_old_detection
+    <set >
+      <if test="inspectionNo != null" >
+        inspection_no = #{inspectionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionDate != null" >
+        inspection_date = #{inspectionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="settlePrice != null" >
+        settle_price = #{settlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productAttrs != null" >
+        product_attrs = #{productAttrs,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="sign != null" >
+        sign = #{sign,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sound.haolei.model.HlOldDetection" >
+    update hl_old_detection
+    set inspection_no = #{inspectionNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      inspection_date = #{inspectionDate,jdbcType=TIMESTAMP},
+      settle_price = #{settlePrice,jdbcType=DECIMAL},
+      product_attrs = #{productAttrs,jdbcType=VARCHAR},
+      partner_id = #{partnerId,jdbcType=VARCHAR},
+      sign = #{sign,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!--自定义开始-->
+
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map">
+
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    hl_old_detection
+    where 1=1
+
+    <if test="orderNo != null">
+      and order_no = #{orderNo}
+    </if>
+  </select>
+  <!--自定义结束-->
+</mapper>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sound.haolei.provider.dao.HlHouseAdminRoleMapper">
+  <resultMap id="BaseResultMap" type="com.sound.haolei.model.HlHouseAdminRole">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, description, ctime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hl_house_admin_role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hl_house_admin_role${substationNameSpell}
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sound.haolei.model.HlHouseAdminRole">
+    insert into hl_house_admin_role (id, name, description, 
+      ctime)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{ctime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sound.haolei.model.HlHouseAdminRole">
+  	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+  		SELECT LAST_INSERT_ID() AS id
+  	</selectKey>
+    insert into hl_house_admin_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sound.haolei.model.HlHouseAdminRole">
+    update hl_house_admin_role
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sound.haolei.model.HlHouseAdminRole">
+    update hl_house_admin_role
+    set name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- ********************************************************自定义 start****************************************************** -->
+  <resultMap type="com.sound.haolei.model.HlHouseAdminRole" id="roleModuleMap" extends="BaseResultMap">
+  	<collection property="modules" ofType="com.sound.haolei.model.HlHouseAdminModule">
+  		<id property="id" column="moduleId" />
+  		<result property="name" column="moduleName" />
+  		<result property="description" column="moduleDescription" />
+  		<result property="type" column="moduleType" />
+  		<result property="status" column="moduleStatus" />
+  		<result property="pid0" column="modulePid0" />
+  		<result property="sortNum" column="moduleSortnum" />
+  		<result property="cdate" column="moduleCdate" />
+  	</collection>
+  </resultMap>
+  
+ <select id="selectAll" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from hl_house_admin_role
+  </select>
+  
+  <select id="selectRoleModuleByPrimaryKey" resultMap="roleModuleMap" parameterType="java.lang.Integer">
+  	SELECT
+		r.id,
+		r. NAME,
+		r.description,
+		m.id AS moduleId,
+		m. NAME AS moduleName,
+		m.description AS moduleDescription,
+		m.type AS moduleType,
+		m. STATUS AS moduleStatus,
+		m.pid0 AS modulePid0,
+		m.sort_num AS moduleSortnum,
+		m.cdate AS moduleCdate
+	FROM
+		hl_house_admin_role r
+	LEFT JOIN hl_house_admin_role_module rm ON r.id = rm.house_admin_role_id
+	LEFT JOIN hl_house_admin_module m ON rm.house_admin_module_id = m.id
+	WHERE
+  		r.id=#{id, jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insertrolemodule" useGeneratedKeys="true" keyColumn="GENERATED_KEY">
+  	insert into hl_house_admin_role_module(house_admin_role_id,house_admin_module_id) values(#{param1.id}, #{param2.id})
+  </insert>
+  
+  <delete id="deleteRoleModulesByRoleid" parameterType="java.lang.Integer">
+  	delete from hl_house_admin_role_module
+  	where house_admin_role_id = #{rid, jdbcType=INTEGER}
+  </delete>
+  
+  <update id="updateRole" parameterType="com.sound.haolei.model.HlHouseAdminRole" >
+    update hl_house_admin_role
+    set name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="getOneId" resultType="java.lang.Integer">
+        SELECT id
+        FROM hl_house_admin_role
+        ORDER BY id LIMIT 0,1
+    </select>
+    <!-- ********************************************************自定义 end****************************************************** -->
+</mapper>

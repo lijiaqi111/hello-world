@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sound.haolei.provider.dao.HlHouseAdminMapper" >
+  <resultMap id="BaseResultMap" type="com.sound.haolei.model.HlHouseAdmin" >
+			 <id column="id" property="id" jdbcType="INTEGER" />
+			<result column="substation_id" property="substationId" jdbcType="INTEGER" />
+			<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+			<result column="identity_card" property="identityCard" jdbcType="VARCHAR" />
+			<result column="bank_card_no" property="bankCardNo" jdbcType="VARCHAR" />
+			<result column="bank_card_name" property="bankCardName" jdbcType="VARCHAR" />
+			<result column="nickname" property="nickname" jdbcType="VARCHAR" />
+			<result column="passwd" property="passwd" jdbcType="VARCHAR" />
+			<result column="status" property="status" jdbcType="TINYINT" />
+			<result column="house_leader" property="houseLeader" jdbcType="TINYINT" />
+			<result column="house_admin_role_id" property="houseAdminRoleId" jdbcType="INTEGER" />
+			<result column="address" property="address" jdbcType="VARCHAR" />
+			<result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+			<result column="ltime" property="ltime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+		id,
+		substation_id,
+		mobile,
+		identity_card,
+		bank_card_no,
+		bank_card_name,
+		nickname,
+		house_leader,
+		passwd,
+		status,
+		house_admin_role_id,
+		address,
+		ctime,
+		ltime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hl_house_admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+	delete from hl_house_admin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sound.haolei.model.HlHouseAdmin" >
+	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+  		SELECT LAST_INSERT_ID() AS id
+  	</selectKey>
+    insert into hl_house_admin (
+			id,
+			substation_id,
+			mobile,
+			identity_card,
+			bank_card_no,
+			bank_card_name,
+			nickname,
+			house_leader,
+			passwd,
+			status,
+			house_admin_role_id,
+			address,
+			ctime,
+			ltime
+	)
+    values (
+			#{id,jdbcType=INTEGER},
+			#{substationId,jdbcType=INTEGER},
+			#{mobile,jdbcType=VARCHAR},
+			#{identityCard,jdbcType=VARCHAR},
+			#{bankCardNo,jdbcType=VARCHAR},
+			#{bankCardName,jdbcType=VARCHAR},
+			#{nickname,jdbcType=VARCHAR}, 
+			#{houseLeader,jdbcType=TINYINT}, 
+			#{passwd,jdbcType=VARCHAR},
+			#{status,jdbcType=TINYINT},
+			#{houseAdminRoleId,jdbcType=INTEGER},
+			#{address,jdbcType=VARCHAR},
+			#{ctime,jdbcType=TIMESTAMP},
+			#{ltime,jdbcType=TIMESTAMP}
+	  )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sound.haolei.model.HlHouseAdmin" >
+	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+  		SELECT LAST_INSERT_ID() AS id
+  	</selectKey>
+    insert into hl_house_admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+		id,
+		</if>
+		<if test="substationId != null" >
+		substation_id,
+		</if>
+		<if test="mobile != null" >
+		mobile,
+		</if>
+		<if test="identityCard != null" >
+		identity_card,
+		</if>
+		<if test="bankCardNo != null" >
+		bank_card_no,
+		</if>
+		<if test="bankCardName != null" >
+		bank_card_name,
+		</if>
+		<if test="nickname != null" >
+		nickname,
+		</if>
+		<if test="houseLeader != null" >
+		house_leader,
+		</if>
+		<if test="passwd != null" >
+		passwd,
+		</if>
+		<if test="status != null" >
+		status,
+		</if>
+		<if test="houseAdminRoleId != null" >
+		house_admin_role_id,
+		</if>
+		<if test="address != null" >
+		address,
+		</if>
+		<if test="ctime != null" >
+		ctime,
+		</if>
+		<if test="ltime != null" >
+		ltime,
+		</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+		#{id,jdbcType=INTEGER},
+		</if>
+		<if test="substationId != null" >
+		#{substationId,jdbcType=INTEGER},
+		</if>
+		<if test="mobile != null" >
+		#{mobile,jdbcType=VARCHAR},
+		</if>
+		<if test="identityCard != null" >
+		#{identityCard,jdbcType=VARCHAR},
+		</if>
+		<if test="bankCardNo != null" >
+		#{bankCardNo,jdbcType=VARCHAR},
+		</if>
+		<if test="bankCardName != null" >
+		#{bankCardName,jdbcType=VARCHAR},
+		</if>
+		<if test="nickname != null" >
+		#{nickname,jdbcType=VARCHAR},
+		</if>
+		<if test="houseLeader != null" >
+		#{houseLeader,jdbcType=TINYINT},
+		</if>
+		<if test="passwd != null" >
+		#{passwd,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null" >
+		#{status,jdbcType=TINYINT},
+		</if>
+		<if test="houseAdminRoleId != null" >
+		#{houseAdminRoleId,jdbcType=INTEGER},
+		</if>
+		<if test="address != null" >
+		#{address,jdbcType=VARCHAR},
+		</if>
+		<if test="ctime != null" >
+		#{ctime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="ltime != null" >
+		#{ltime,jdbcType=TIMESTAMP},
+		</if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sound.haolei.model.HlHouseAdmin" >
+    update hl_house_admin
+    <set >
+	<if test="substationId != null" >
+	substation_id = #{substationId,jdbcType=INTEGER},
+	</if>
+	<if test="mobile != null" >
+	mobile = #{mobile,jdbcType=VARCHAR},
+	</if>
+	<if test="identityCard != null" >
+	identity_card = #{identityCard,jdbcType=VARCHAR},
+	</if>
+	<if test="bankCardNo != null" >
+	bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+	</if>
+	<if test="bankCardName != null" >
+	bank_card_name = #{bankCardName,jdbcType=VARCHAR},
+	</if>
+	<if test="nickname != null" >
+	nickname = #{nickname,jdbcType=VARCHAR},
+	</if>
+	<if test="houseLeader != null" >
+	house_leader = #{houseLeader,jdbcType=TINYINT},
+	</if>
+	<if test="passwd != null" >
+	passwd = #{passwd,jdbcType=VARCHAR},
+	</if>
+	<if test="status != null" >
+	status = #{status,jdbcType=TINYINT},
+	</if>
+	<if test="houseAdminRoleId != null" >
+	house_admin_role_id = #{houseAdminRoleId,jdbcType=INTEGER},
+	</if>
+	<if test="address != null" >
+	address = #{address,jdbcType=VARCHAR},
+	</if>
+	<if test="ctime != null" >
+	ctime = #{ctime,jdbcType=TIMESTAMP},
+	</if>
+	<if test="ltime != null" >
+	ltime = #{ltime,jdbcType=TIMESTAMP},
+	</if>
+    </set>
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sound.haolei.model.HlHouseAdmin" >
+    update hl_house_admin
+    set 
+			substation_id = #{substationId,jdbcType=INTEGER},
+			mobile = #{mobile,jdbcType=VARCHAR},
+			identity_card = #{identityCard,jdbcType=VARCHAR},
+			bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+			bank_card_name = #{bankCardName,jdbcType=VARCHAR},
+			nickname = #{nickname,jdbcType=VARCHAR},
+			house_leader = #{houseLeader,jdbcType=TINYINT},
+			passwd = #{passwd,jdbcType=VARCHAR},
+			status = #{status,jdbcType=TINYINT},
+			house_admin_role_id = #{houseAdminRoleId,jdbcType=INTEGER},
+			address = #{address,jdbcType=VARCHAR},
+			ctime = #{ctime,jdbcType=TIMESTAMP},
+			ltime = #{ltime,jdbcType=TIMESTAMP}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+   <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hl_house_admin
+  </select>
+  
+  <sql  id="page_where">
+  <where>
+	<if test="substationId != null" >
+		and substation_id = #{substationId,jdbcType=INTEGER}
+	</if>
+	<if test="mobile != null" >
+		and mobile = #{mobile,jdbcType=VARCHAR}
+	</if>
+	<if test="identityCard != null" >
+		and identity_card = #{identityCard,jdbcType=VARCHAR}
+	</if>
+	<if test="bankCardNo != null" >
+		and bank_card_no = #{bankCardNo,jdbcType=VARCHAR}
+	</if>
+	<if test="bankCardName != null" >
+		and bank_card_name = #{bankCardName,jdbcType=VARCHAR}
+	</if>
+	<if test="nickname != null" >
+		and nickname = #{nickname,jdbcType=VARCHAR}
+	</if>
+	<if test="houseLeader != null" >
+		and house_leader = #{houseLeader,jdbcType=TINYINT}
+	</if>
+	<if test="passwd != null" >
+		and passwd = #{passwd,jdbcType=VARCHAR}
+	</if>
+	<if test="status != null" >
+		and status = #{status,jdbcType=TINYINT}
+	</if>
+	<if test="houseAdminRoleId != null" >
+		and house_admin_role_id = #{houseAdminRoleId,jdbcType=INTEGER}
+	</if>
+	<if test="address != null" >
+		and address = #{address,jdbcType=VARCHAR}
+	</if>
+	<if test="ctimeStart != null" >
+		and ctime &gt;= #{ctimeStart}
+	</if>
+	<if test="ctimeEnd != null" >
+		and ctime &lt;= #{ctimeEnd}
+	</if>
+	<if test="ltimeStart != null" >
+		and ltime &gt;= #{ltimeStart}
+	</if>
+	<if test="ltimeEnd != null" >
+		and ltime &lt;= #{ltimeEnd}
+	</if>
+  </where>
+  </sql>
+  <sql  id="page_order">
+	<if test="orderStr != null and orderStr != ''" >
+  		order by ${orderStr}
+  	</if>
+  </sql>
+  <sql id="page_limit">
+  	<if test="curRow!=null and limitSize!='' ">limit #{curRow},#{limitSize}</if>
+  </sql>
+  
+  <!-- ******************************************************************************自定义********************************************************************************** -->
+   <!-- 查询总条数 -->
+  <select id="queryCount" resultType="java.lang.Long" parameterType="java.util.Map">
+  	select
+  		count(1)
+  	from hl_house_admin t
+  		where 1=1
+  	<include refid="where" />
+  </select>
+  <!-- 查询符合结果的数据 -->
+  <resultMap id="adminUserWithHouse"  type="com.sound.haolei.dto.HlHouseAdminLoginDto">
+	  <result column="id" jdbcType="INTEGER" property="admin_id" />
+	  <result column="mobile" jdbcType="VARCHAR" property="admin_mobile" />
+	  <result column="nickname" jdbcType="VARCHAR" property="admin_nickname" />
+	  <result column="status" jdbcType="TINYINT" property="admin_status" />
+	  <result column="house_admin_role_id" jdbcType="INTEGER" property="houseAdminRoleId" />
+	   <result column="house_admin_role_name" jdbcType="VARCHAR" property="houseAdminRoleName" />
+	  <result column="nick_name" jdbcType="VARCHAR" property="house_nickname" />
+	  <result column="house_id" jdbcType="VARCHAR" property="house_id" />
+	  <result column="ctime" jdbcType="TIMESTAMP" property="admin_ctime" />
+	  <result column="ltime" jdbcType="TIMESTAMP" property="admin_ltime" />
+  </resultMap>
+  <select id="queryPageResult" resultMap="adminUserWithHouse" parameterType="java.util.Map">
+  	select 
+   		t.id,t.mobile,t.nickname,t.status,t.house_admin_role_id,(select name from hl_house_admin_role le where t.house_admin_role_id = le.id) as house_admin_role_name,t.ctime,t.ltime,mi.house_id,
+   		(select nickname from hl_house${substationNameSpell} se where se.id = mi.house_id)as nick_name
+	from hl_house_admin t left join hl_house_middle_house_admin${substationNameSpell} mi on t.id = mi.admin_id
+    where 1=1
+    <include refid="where"/>
+    <include refid="page_order"/>
+    <include refid="page_limit"/>
+  </select>
+  <!-- 批量删除站内信 -->
+  <delete id="batchDelete" parameterType="java.util.List">
+	delete from hl_house_admin where id in
+	<foreach collection="list" index="index" item="item" open="(" separator="," close=")">     
+       ${item}     
+    </foreach> 
+  </delete>
+  
+  <sql id="where">
+  	<if test="hSId != null ">
+  		and ${hSId}
+  	</if>
+  	<if test="mobile != null and mobile != ''">
+  		and mobile like CONCAT(CONCAT('%', #{mobile,jdbcType=VARCHAR}), '%')
+  	</if>
+  	<if test="nickname != null and nickname != ''">
+  		and nickname like CONCAT(CONCAT('%', #{nickname,jdbcType=VARCHAR}), '%')
+  	</if>
+  	<if test="houseId !=null ">
+  		and EXISTS(select 1 from hl_house_middle_house_admin${substationNameSpell}  where house_id=#{houseId} and admin_id=t.id)
+  	</if>
+  	<if test="outHouseId !=null ">
+  		and not EXISTS(select 1 from hl_house_middle_house_admin${substationNameSpell}  where house_id=#{outHouseId} and admin_id=t.id)
+  	</if>
+  	<if test="identityCard != null" >
+		and identity_card = #{identityCard,jdbcType=VARCHAR}
+	</if>
+	<if test="bankCardNo != null" >
+		and bank_card_no = #{bankCardNo,jdbcType=VARCHAR}
+	</if>
+	<if test="bankCardName != null" >
+		and bank_card_name = #{bankCardName,jdbcType=VARCHAR}
+	</if>
+  	<if test="cSartTime != null and cSartTime != ''">
+		and ctime &gt;= #{cSartTime}
+	</if>
+	<if test="cEndTime != null and cEndTime != ''">
+		and ctime &lt;= #{cEndTime}
+	</if>
+	<if test="lSartTime != null and lSartTime != ''">
+		and ltime &gt;= #{lSartTime}
+	</if>
+	<if test="lEndTime != null and lEndTime != ''">
+		and ltime &lt;= #{lEndTime}
+	</if>
+	<if test="status != null and type != ''">
+	 	and status = #{status}
+	</if>
+	<if test="list != null">
+			and substation_id in 
+			<foreach collection="list" index="index" item="item" open="(" separator="," close=")">     
+	       		${item}     
+	    	</foreach> 
+	</if>
+  </sql>
+  
+  <!-- 根据条件查询 -->
+  <select id="selectByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from hl_house_admin t
+    where 1=1
+    <include refid="where"/>
+  </select>
+  <!-- 根据手机号查询 -->
+  <select id="selectByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from hl_house_admin 
+    where mobile = #{mobile}
+  </select>
+  
+  <!-- 根据手机号查询管理员和回收亭详细信息 -->
+  <select id="selectFullInfoByMobile" resultType="java.util.Map">
+  	SELECT
+	  ha.id AS admin_id,
+	  ha.mobile AS admin_mobile,
+	  ha.nickname AS admin_nickname,
+	  ha.passwd AS admin_password,
+	  ha.`status` AS admin_status,
+	  ha.substation_id as substation_id,
+	  sub.`name` AS substation_name,
+	  ha.house_admin_role_id AS role_id,
+	  ha.ctime AS admin_ctime,
+	  ha.ltime AS admin_ltime, 
+	  middle.house_id AS house_id,
+	  house.nickname AS house_nickname,
+	  house.province_id AS house_province_id,
+	  pro.`name` AS house_province_name,
+	  house.city_id AS house_city_id,
+	  city.`name` AS house_city_name,
+	  house.county_id AS house_county_id,
+      county.`name` AS house_county_name,
+      house.area AS house_area,
+	  house.address AS house_address
+	FROM
+		hl_house_admin ha
+	left JOIN hl_house_middle_house_admin${substationNameSpell} middle ON ha.id = middle.admin_id
+	left JOIN hl_house${substationNameSpell} house ON middle.house_id = house.id
+	left JOIN map_province pro ON house.province_id = pro.id
+	left JOIN map_city city ON house.city_id = city.id
+	left JOIN map_county county ON house.county_id = county.id
+	LEFT JOIN hl_substation sub ON ha.substation_id = sub.id
+	WHERE
+		ha.mobile = #{mobile}
+	ORDER BY house.ctime DESC
+  </select>
+  <!-- 根据手机号查询管理员详细信息 -->
+  <select id="selectLoginInfoByMobile" parameterType="java.lang.String" resultType="java.util.Map">
+  	SELECT
+	  ha.id AS admin_id,
+	  ha.mobile AS admin_mobile,
+	  ha.nickname AS admin_nickname,
+	  ha.passwd AS admin_password,
+	  ha.`status` AS admin_status,
+	  ha.substation_id as substation_id,
+	  ha.house_admin_role_id AS role_id,
+	  ha.ctime AS admin_ctime,
+	  ha.ltime AS admin_ltime
+	FROM
+		hl_house_admin ha
+	
+	WHERE
+		ha.mobile = #{mobile}
+	ORDER BY ha.ctime DESC
+  </select>
+  <!-- 根据手机号查询管理员权限信息-->
+  <select id="selectModuleInfoByMobile" parameterType="java.lang.String" resultType="java.util.Map">
+  	SELECT
+	  ha.id AS adminId,
+	  ha.mobile AS mobile,
+	  rm.house_admin_role_id AS roleId,
+	  rm.house_admin_module_id AS moduleId,
+	  m.`name` AS moduleName,
+	  IFNULL(m.type,0) AS moduleType,
+	  IFNULL(m.status,0) AS moduleStatus,
+	  m.pid0 AS modulePid0
+	FROM
+		hl_house_admin ha
+	RIGHT JOIN hl_house_admin_role_module rm ON ha.house_admin_role_id = rm.house_admin_role_id
+	LEFT JOIN hl_house_admin_module m ON rm.house_admin_module_id = m.id
+	LEFT JOIN (SELECT id,pid0,sort_num FROM hl_house_admin_module) t2 ON m.pid0=t2.id
+	where 1=1
+	AND ha.mobile = #{mobile}
+	ORDER BY moduleType ASC,concat(if(m.type=0,'',right(concat('0000',ifnull(t2.sort_num,'')),4)),right(concat('0000',ifnull(m.sort_num,'')),4))
+  </select>
+  
+  <select id="selectRoleIdById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	SELECT
+		ha.house_admin_role_id AS roleId
+	FROM
+		hl_house_admin ha 
+	where ha.id = 8
+  </select>
+  <!-- 查询服务亭下管理员 -->
+  <select id="selectByIdAndHouseId" resultMap="BaseResultMap">
+  	select t.id, t.substation_id, t.mobile, t.nickname, t.passwd, t.status, t.house_admin_role_id, t.ctime, 
+    t.ltime,t.bank_card_no,t.identity_card,t.bank_card_name,t.address,t.house_leader
+    from hl_house_admin t 
+    left JOIN hl_house_middle_house_admin${substationNameSpell} middle ON t.id = middle.admin_id
+	left JOIN hl_house${substationNameSpell} house ON middle.house_id = house.id
+	where t.id = #{adminUserId} and house.id=#{houseId}
+  </select>
+  <!-- 获得此服务亭亭长id
+    @author liuyang
+  	@date 2017年12月19日16:49:55
+   -->
+   <select id="getHouseLeaderId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT id from 
+    hl_house_admin where  house_leader=1 and id in 
+    (select admin_id from hl_house_middle_house_admin_bengbu WHERE 
+    house_id=#{houseId})
+  </select>
+
+  <!-- ******************************************************************************自定义********************************************************************************** -->
+</mapper>
